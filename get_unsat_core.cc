@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    FILE* fp = popen("cvc4 smtlib_test.smt2", "r");
+    FILE* fp = popen("cvc4 smtlib_unsat_core.smt2", "r");
     
     if (fp == NULL) { 
         printf("FAIL!\n"); 

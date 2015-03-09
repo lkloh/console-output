@@ -1,4 +1,4 @@
-(set-logic S)
+(set-logic QF_LIA)
 (set-option :produce-models true)
 
 (declare-fun variable177 () Int)
@@ -31,6 +31,7 @@
 (declare-fun variable275 () Int)
 (declare-fun variable276 () Int)
 (declare-fun f_prepend (Int Int ) Int)
+
 (assert(= variable272 variable261))
 (assert(= variable273 variable262))
 (assert(= variable274 variable264))
@@ -39,19 +40,8 @@
 (assert(= variable271 variable178))
 (assert(= variable274 variable179))
 (assert(= variable177 (f_prepend variable178 variable179 )))
-(assert(= variable272 variable267))
-(assert(= variable268 variable184))
-(assert(= variable273 variable185))
-(assert(= variable177 variable186))
-(assert(= variable184 (f_prepend variable185 variable186 )))
-(assert(= variable275 variable187))
-(assert(= variable270 variable188))
-(assert(= variable265 variable189))
-(assert(= variable187 (f_prepend variable188 variable189 )))
-(assert(= variable276 variable190))
-(assert(= variable269 variable191))
-(assert(= variable266 variable192))
-(assert(= variable190 (f_prepend variable191 variable192 )))
+;(assert (distinct variable178 variable179))
+
 (check-sat)
 (get-model)
 

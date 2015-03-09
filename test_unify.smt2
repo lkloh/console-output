@@ -12,8 +12,5 @@
 (assert (distinct x w))
 
 (check-sat)
-(get-value (x))
-(get-value (y))
-(get-value (z))
-(get-value (w))
+(get-model)
 

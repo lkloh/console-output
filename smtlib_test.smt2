@@ -1,6 +1,9 @@
-(set-logic QF_LIA)
-(declare-fun x () Int)
-(declare-fun y () Int)
-(assert (= (+ x (* 2y)) 20))
-(assert (= (- x y) 3))
-(check-sat) ;no solution
+(set-logic AUFLIA)
+(set-option :produce-models true)
+
+; (assert (forall ((variable193 Int)) (= variable193 10000) ))
+
+
+(assert (forall ((variable193 Int))(forall ((variable194 Int))(forall ((variable195 Int))(forall ((variable196 Int))(forall ((variable197 Int))(forall ((variable198 Int))(forall ((variable199 Int))(forall ((variable200 Int))(forall ((variable201 Int))(= variable193 10000)))))))))) )
+(check-sat)
+(get-model)

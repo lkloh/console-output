@@ -1,6 +1,7 @@
 #include <vector>
 #include "z3++.h"
-
+#include <stdio.h>
+#include <iostream>
 
 using namespace z3;
 
@@ -988,45 +989,46 @@ void laykuan_test() {
     std::cout << "find_model_example_laykuan\n";
 
     context c;
-    std::string testing = "(set-option :produce-models true)(set-logic AUFLIA)(declare-fun x () Int)(declare-fun y () Int)(declare-fun z () Int)(declare-fun w () Int)(assert (= x y))(assert (= z w))(assert (distinct x w))";
-
+    //std::string testing = "(set-option :produce-models true)(set-logic AUFLIA)(declare-fun x () Int)(declare-fun y () Int)(declare-fun z () Int)(declare-fun w () Int)(assert (= x y))(assert (= z w))(assert (distinct x w))";
+    std::string testing = "(declare-fun x1 () Int) (declare-fun x2 () Int) (declare-fun x3 () Int) (declare-fun x4 () Int) (declare-fun x5 () Int) (assert (! (<= x1 0) :named s_0)) (assert (! (<= x2 0) :named s_1)) (assert (! (<= x3 0) :named s_2)) (assert (! (<= x4 0) :named s_3)) (assert (! (<= x5 0) :named s_4)) (assert (<= 1 (+ x1 x2 x3 x4 x5)))";
     Z3_ast parsed = Z3_parse_smtlib2_string(c, testing.c_str(), 0,0,0,0,0,0);
     expr e(c, parsed);
 
     solver s(c);
 
-    s.add(e); // <--- Add constraints to solver here
+    s.add(e, "top"); // <--- Add constraints to solver here
 
-    if(s.check() == sat) {
+    if (s.check() == sat) {
         std::cout << "SAT\n";
+        model m = s.get_model();
+        std::cout << m << std::endl;
     } else {
         std::cout << "UNSAT\n";
-    }
-
-    model m = s.get_model();
-    std::cout << m << "\n";
-
-    // traversing the model
-    for (unsigned i = 0; i < m.size(); i++) {
-        func_decl v = m[i];
-        // this problem contains only constants
-        assert(v.arity() == 0); 
-        std::cout << v.name() << " = " << m.get_const_interp(v) << "\n";
+        expr_vector core = s.unsat_core();
+        std::cout << "size: " << core.size() << "\n";
+        for (unsigned i = 0; i < core.size(); i++) {
+            std::cout << core[i] << "\n";
+        }
     }
 }
+
 
 void lk_test() {
     context c;
-    std::string testing = "(declare-const p0 Bool)(assert(= p0 true))(assert(= p0 false))(check-sat)";
+    std::string testing = "(declare-const p0 Bool)(assert(= p0 true)) (assert(= p0 false))(check-sat)";
 
     Z3_ast parsed = Z3_parse_smtlib2_string(c, testing.c_str(), 0,0,0,0,0,0);
     expr e(c, parsed);
 
     solver s(c);
-    s.add(e);
-    if(s.check() == z3::sat)
+    s.add(e, "top");
+    if (s.check() == z3::sat)
         std::cout << "SAT!\n";
+    else 
+        std::cout << "UNSAT!\n";
 }
+
+
 
 int main() {
     try {

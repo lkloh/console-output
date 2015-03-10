@@ -6,7 +6,9 @@
 
 (declare-fun z () Int)
 (declare-fun w () Int)
+(declare-const a Int)
 
+(assert (= a 3))
 (assert (= x y))
 (assert (= z w))
 (assert (distinct x w))

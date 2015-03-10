@@ -1,4 +1,5 @@
 (set-option :produce-unsat-cores true)
+(set-option :produce-models true)
 (set-logic AUFLIA)
 (declare-fun x () Int)
 (declare-fun y () Int)

@@ -40,7 +40,7 @@
 (assert(= variable271 variable178))
 (assert(= variable274 variable179))
 (assert(= variable177 (f_prepend variable178 variable179 )))
-;(assert (distinct variable178 variable179))
+(assert (not (= variable178 variable179)))
 
 (check-sat)
 (get-model)
